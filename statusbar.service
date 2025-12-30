@@ -1,0 +1,19 @@
+[Unit]
+Description=Statusbar for dwm
+Requires=x11.service
+After=x11.service dwm.service
+PartOf=x11.service
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+Environment=PATH=%h/.local/bin:%h/.cargo/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=%h/.local/bin/statusbar
+Restart=on-failure
+RestartSec=1s
+TimeoutStartSec=10s
+KillMode=process
+
+[Install]
+WantedBy=graphical-session.target

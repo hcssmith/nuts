@@ -1,0 +1,18 @@
+[Unit]
+Description=Picom compositor
+Requires=x11.service
+After=x11.service dwm.service
+PartOf=x11.service
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+ExecStart=/usr/local/bin/picom --config %h/.config/picom.conf
+Restart=on-failure
+RestartSec=1s
+KillMode=process
+TimeoutStartSec=10s
+
+[Install]
+WantedBy=graphical-session.target

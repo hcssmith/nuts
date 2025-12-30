@@ -1,0 +1,21 @@
+[Unit]
+Description=dwm window manager
+After=x11.service
+Requires=x11.service
+PartOf=x11.service
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+Environment=PATH=%h/.local/bin:%h/.cargo/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/local/bin/dwm
+
+Restart=on-failure
+RestartSec=1s
+TimeoutStartSec=10s
+
+KillMode=process
+
+[Install]
+WantedBy=graphical-session.target

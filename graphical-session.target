@@ -1,0 +1,7 @@
+[Unit]
+Description=Graphical Session
+Requires=x11.service
+After=x11.service
+
+[Install]
+WantedBy=default.target

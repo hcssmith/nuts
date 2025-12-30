@@ -1,0 +1,17 @@
+[Unit]
+Description=Xorg server
+ConditionPathExists=/dev/tty1
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+ExecStart=/usr/libexec/Xorg.wrap :0 vt1 -keeptty -nolisten tcp -dpi 192
+
+Restart=no
+KillMode=mixed
+TimeoutStopSec=5
+
+
+[Install]
+WantedBy=graphical-session.target

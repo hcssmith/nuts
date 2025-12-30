@@ -1,0 +1,15 @@
+[Unit]
+Description=Set wallpaper
+Requires=x11.service
+After=x11.service dwm.service
+PartOf=x11.service
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+ExecStart=%h/.local/bin/wallpaper.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical-session.target
