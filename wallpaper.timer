@@ -1,0 +1,12 @@
+[Unit]
+Description=Reapply wallpaper every 2 hours
+PartOf=graphical-session.target
+
+[Timer]
+OnUnitActiveSec=2h
+OnBootSec=2h
+AccuracySec=1min
+Unit=wallpaper.service
+
+[Install]
+WantedBy=timers.target

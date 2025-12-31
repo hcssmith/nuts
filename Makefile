@@ -4,7 +4,7 @@ SYSTEMD_USER_DIR := $(HOME)/.config/systemd/user
 
 # Find all unit files in this directory
 UNITS := $(wildcard *.service *.socket *.target *.timer *.path)
-ENABLE_UNITS := graphical-session.target
+ENABLE_UNITS := graphical-session.target dwm x11 dunst picom wallpaper wallpaper.timer dmenu-cache-clear statusbar
 
 .PHONY: all install uninstall reload enable disable list
 

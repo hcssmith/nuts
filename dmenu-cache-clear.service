@@ -1,0 +1,13 @@
+[Unit]
+Description=Clean dmenu_run cache
+Requires=x11.service
+After=x11.service
+PartOf=x11.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/rm -f %h/.cache/dmenu_run
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical-session.target

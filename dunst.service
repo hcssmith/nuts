@@ -1,15 +1,18 @@
 [Unit]
-Description=Set wallpaper
+Description=Dunst notification daemon
 Requires=x11.service
 After=x11.service dwm.service
 PartOf=x11.service
 
 [Service]
-Type=oneshot
+Type=simple
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=%h/.Xauthority
-Environment=RUNNING_UNDER_SYSTEMD=1
-ExecStart=%h/.local/bin/wallpaper.sh
+ExecStart=/usr/bin/dunst
+Restart=on-failure
+RestartSec=1s
+KillMode=process
+TimeoutStartSec=10s
 
 [Install]
 WantedBy=graphical-session.target
