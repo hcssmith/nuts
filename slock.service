@@ -1,0 +1,14 @@
+[Unit]
+Description=Lock screen on X start
+BindsTo=dwm.service
+After=dwm.service
+PartOf=x11.service
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+ExecStart=/usr/bin/slock
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=Lock screen after suspend
+After=suspend.target
+After=hibernate.target
+After=hybrid-sleep.target
+After=suspend-then-hibernate.target
+
+[Service]
+Type=oneshot
+User=REPLACE_ME
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/REPLACE_ME/.Xauthority
+ExecStart=/usr/local/bin/slock
+
+[Install]
+WantedBy=suspend.target

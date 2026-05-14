@@ -3,7 +3,7 @@ Description=dwm window manager
 After=x11.service
 Requires=x11.service
 PartOf=x11.service
-Wants=wallpaper.service
+Wants=wallpaper.service slock.service
 
 [Service]
 Type=simple
