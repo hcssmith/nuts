@@ -3,6 +3,7 @@ Description=Set wallpaper
 Requires=x11.service
 After=x11.service dwm.service
 PartOf=x11.service
+BindsTo=dwm.service
 
 [Service]
 Type=oneshot
