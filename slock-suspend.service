@@ -7,10 +7,10 @@ After=suspend-then-hibernate.target
 
 [Service]
 Type=oneshot
-User=REPLACE_ME
+User=hsmith
 Environment=DISPLAY=:0
-Environment=XAUTHORITY=/home/REPLACE_ME/.Xauthority
-ExecStart=/usr/local/bin/slock
+Environment=XAUTHORITY=/home/hsmith/.Xauthority
+ExecStart=/home/hsmith/.local/bin/slock.sh
 
 [Install]
 WantedBy=suspend.target
