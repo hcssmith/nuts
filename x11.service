@@ -8,7 +8,8 @@ Environment=DISPLAY=:0
 Environment=XAUTHORITY=%h/.Xauthority
 ExecStart=/usr/libexec/Xorg.wrap :0 vt1 -keeptty -nolisten tcp -dpi 192
 
-Restart=no
+Restart=on-failure
+RestartSec=1s
 
 KillMode=control-group
 KillSignal=SIGTERM

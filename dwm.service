@@ -2,8 +2,9 @@
 Description=dwm window manager
 After=x11.service
 Requires=x11.service
-PartOf=x11.service
 Wants=wallpaper.service
+StartLimitIntervalSec=120
+StartLimitBurst=10
 
 [Service]
 Type=simple
@@ -13,8 +14,7 @@ Environment=PATH=%h/.local/bin:%h/.powershell:%h/.opencode/bin:%h/.cargo/bin:/us
 ExecStart=/usr/local/bin/dwm
 
 Restart=on-failure
-RestartSec=1s
-TimeoutStartSec=10s
+RestartSec=3s
 
 KillMode=process
 
