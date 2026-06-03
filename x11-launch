@@ -1,0 +1,42 @@
+#!/bin/bash
+set -euo pipefail
+
+log() { echo "x11-launch: $*"; }
+
+display="${1:-:0}"
+shift || true
+
+log "Starting Xorg on display $display"
+/usr/libexec/Xorg.wrap "$display" "$@" &
+xorg_pid=$!
+log "Xorg started as PID $xorg_pid, waiting for display to become ready"
+
+retries=0
+max_retries=60
+while [ $retries -lt $max_retries ]; do
+    if DISPLAY="$display" xset q >/dev/null 2>&1; then
+        log "Display $display is ready after ~${retries}s, notifying systemd"
+        systemd-notify --ready
+        log "Waiting on Xorg PID $xorg_pid"
+        wait $xorg_pid
+        ec=$?
+        log "Xorg PID $xorg_pid exited with code $ec"
+        exit $ec
+    fi
+    if ! kill -0 $xorg_pid 2>/dev/null; then
+        log "Xorg PID $xorg_pid died during startup"
+        wait $xorg_pid
+        ec=$?
+        log "Xorg PID $xorg_pid exited with code $ec during startup"
+        exit $ec
+    fi
+    retries=$((retries + 1))
+    sleep 0.5
+done
+
+log "Timed out waiting for display after 30s, notifying systemd anyway"
+systemd-notify --ready
+wait $xorg_pid
+ec=$?
+log "Xorg PID $xorg_pid exited with code $ec"
+exit $ec

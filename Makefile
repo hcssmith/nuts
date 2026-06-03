@@ -5,7 +5,10 @@ SYSTEMD_SYSTEM_DIR := /etc/systemd/system
 
 # User units
 UNITS := $(wildcard *.service *.socket *.target *.timer *.path)
+SCRIPTS := x11-launch
 ENABLE_UNITS := graphical-session.target dwm x11 dunst picom wallpaper wallpaper.timer dmenu-cache-clear statusbar slock
+
+LOCAL_BIN := $(HOME)/.local/bin
 
 # System units (need sudo)
 SYSTEM_UNITS := slock-suspend.service
@@ -14,7 +17,7 @@ SYSTEM_UNITS := slock-suspend.service
 
 all: install reload
 
-install: install-user install-system
+install: install-user install-scripts install-system
 
 install-user:
 	@echo "Installing systemd user units..."
@@ -24,12 +27,20 @@ install-user:
 		install -m 0644 "$$unit" "$(SYSTEMD_USER_DIR)/$$unit"; \
 	done
 
+install-scripts:
+	@echo "Installing helper scripts..."
+	@mkdir -p "$(LOCAL_BIN)"
+	@for script in $(SCRIPTS); do \
+		echo "  -> $$script"; \
+		install -m 0755 "$$script" "$(LOCAL_BIN)/$$script"; \
+	done
+
 install-system:
 	@echo "Installing systemd system units (requires sudo)..."
 	@sed 's/REPLACE_ME/$(USER)/g' slock-suspend.service | sudo tee "$(SYSTEMD_SYSTEM_DIR)/slock-suspend.service" > /dev/null
 	@sudo chmod 0644 "$(SYSTEMD_SYSTEM_DIR)/slock-suspend.service"
 
-uninstall: uninstall-user uninstall-system
+uninstall: uninstall-user uninstall-scripts uninstall-system
 
 uninstall-user:
 	@echo "Removing systemd user units..."
@@ -38,6 +49,13 @@ uninstall-user:
 		rm -f "$(SYSTEMD_USER_DIR)/$$unit"; \
 	done
 	@$(MAKE) reload
+
+uninstall-scripts:
+	@echo "Removing helper scripts..."
+	@for script in $(SCRIPTS); do \
+		echo "  -> $$script"; \
+		rm -f "$(LOCAL_BIN)/$$script"; \
+	done
 
 uninstall-system:
 	@echo "Removing systemd system units (requires sudo)..."
