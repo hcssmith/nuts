@@ -1,0 +1,14 @@
+[Unit]
+Description=Run slock once on initial startup
+After=x11.service dwm.service wallpaper.service
+Requires=x11.service
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+ExecStart=%h/.local/bin/slock-once.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical-session.target

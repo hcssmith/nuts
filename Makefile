@@ -5,8 +5,8 @@ SYSTEMD_SYSTEM_DIR := /etc/systemd/system
 
 # User units
 UNITS := $(wildcard *.service *.socket *.target *.timer *.path)
-SCRIPTS := x11-launch
-ENABLE_UNITS := graphical-session.target dwm x11 dunst picom wallpaper wallpaper.timer dmenu-cache-clear statusbar slock
+SCRIPTS := x11-launch slock-once.sh
+ENABLE_UNITS := graphical-session.target dwm x11 dunst picom wallpaper wallpaper.timer dmenu-cache-clear statusbar slock-once
 
 LOCAL_BIN := $(HOME)/.local/bin
 
